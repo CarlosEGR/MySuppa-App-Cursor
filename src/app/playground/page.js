@@ -49,7 +49,7 @@ export default function Playground() {
             API Playground
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Test your API key to ensure it's working correctly. Enter your API key below to validate it.
+            Test your API key to ensure it&apos;s working correctly. Enter your API key below to validate it.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
