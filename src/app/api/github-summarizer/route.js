@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { apiKeyService } from '../../lib/api';
+import { summarizeReadme } from "./Chain";
 
 export async function POST(request) {
   try {
@@ -33,8 +34,9 @@ export async function POST(request) {
     try {
       const readmeContent = await getGitHubReadme(githubUrl);
       console.log('Fetched README content:', readmeContent);
+      const summaryResult = await summarizeReadme(readmeContent);
       return NextResponse.json(
-        { readme: readmeContent },
+        { readme: readmeContent, summary: summaryResult },
         { status: 200 }
       );
     } catch (fetchError) {

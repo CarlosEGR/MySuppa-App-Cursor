@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
+import GoogleLoginButton from "./components/GoogleLoginButton";
 
 export default function Home() {
   return (
@@ -28,11 +28,10 @@ export default function Home() {
           </li>
         </ol>
 
+        <GoogleLoginButton />
         <Header />
       </main>
       <Footer />
-      
-
     </div>
   );
 }

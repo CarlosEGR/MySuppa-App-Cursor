@@ -7,13 +7,25 @@ import { isSupabaseConfigured } from '../lib/supabase';
 import ApiKeyTable from '../components/ApiKeyTable';
 import CreateApiKeyModal from '../components/CreateApiKeyModal';
 import UsagePlanCard from '../components/UsagePlanCard';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [apiKeys, setApiKeys] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  if (status === 'loading') {
+    return null;
+  }
+  if (status === 'unauthenticated') {
+    router.push('/auth/signin');
+    return null;
+  }
 
   const fetchApiKeys = async () => {
     try {
@@ -125,7 +137,7 @@ export default function Dashboard() {
   const totalUsage = apiKeys.reduce((acc, key) => acc + key.usage, 0);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] dark:bg-gray-900 p-8">
+    <div className="min-h-screen bg-[#f8f9fc] dark:bg-gray-900 p-8 mt-20">
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex justify-between items-center">

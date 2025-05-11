@@ -3,11 +3,21 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
 
 export default function Playground() {
+  const { data: session, status } = useSession();
   const [apiKey, setApiKey] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  if (status === 'loading') {
+    return null;
+  }
+  if (status === 'unauthenticated') {
+    router.push('/auth/signin');
+    return null;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
